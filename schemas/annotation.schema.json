@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "annotation.schema.json",
+  "title": "Meninges B-scan annotation",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "image_id",
+    "image_sha256",
+    "calibration_id",
+    "revision",
+    "status",
+    "measurements",
+    "rois",
+    "layout"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "image_id": {"type": "string", "minLength": 1},
+    "image_sha256": {"type": "string", "pattern": "^[A-F0-9]{64}$"},
+    "calibration_id": {"type": "string", "minLength": 1},
+    "revision": {"type": "integer", "minimum": 1},
+    "status": {
+      "enum": ["awaiting_annotation", "in_progress", "ready_for_review", "approved", "returned"]
+    },
+    "measurements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "p1_px", "p2_px", "views"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^T[0-9]{3}$"},
+          "kind": {
+            "enum": ["thickness", "shared_foot_distance"]
+          },
+          "group_id": {"type": "string", "pattern": "^G[0-9]{3}$"},
+          "group_member": {"enum": ["A", "B"]},
+          "p1_px": {"$ref": "#/$defs/point"},
+          "p2_px": {"$ref": "#/$defs/point"},
+          "views": {
+            "type": "array",
+            "items": {"enum": ["main", "inset"]},
+            "minItems": 1,
+            "uniqueItems": true,
+            "contains": {"const": "main"}
+          },
+          "label_offset_px": {"$ref": "#/$defs/point"},
+          "calculated": {"type": "object"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "refractive_index_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "reference_id",
+          "measurement_ids",
+          "foot_px",
+          "calculated"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^G[0-9]{3}$"},
+          "reference_id": {"const": "L001"},
+          "measurement_ids": {
+            "type": "array",
+            "items": {"type": "string", "pattern": "^T[0-9]{3}$"},
+            "minItems": 2,
+            "maxItems": 2,
+            "uniqueItems": true
+          },
+          "foot_px": {"$ref": "#/$defs/point"},
+          "label_offset_px": {"$ref": "#/$defs/point"},
+          "calculated": {
+            "type": "object",
+            "required": [
+              "formula",
+              "smaller_distance_um",
+              "larger_distance_um",
+              "distance_ratio",
+              "refractive_index"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "reference_lines": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "p1_px", "p2_px"],
+        "properties": {
+          "id": {"const": "L001"},
+          "p1_px": {"$ref": "#/$defs/point"},
+          "p2_px": {"$ref": "#/$defs/point"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "rois": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "x_px", "y_px", "width_px", "height_px"],
+        "properties": {
+          "id": {"const": "R001"},
+          "x_px": {"type": "number"},
+          "y_px": {"type": "number"},
+          "width_px": {"type": "number", "exclusiveMinimum": 0},
+          "height_px": {"type": "number", "exclusiveMinimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "layout": {
+      "type": "object",
+      "required": ["inset_aspect_ratio"],
+      "properties": {
+        "inset_aspect_ratio": {"const": 1.0},
+        "main_scale_bar": {"type": "object"},
+        "inset_scale_bar": {"type": "object"}
+      },
+      "additionalProperties": true
+    },
+    "history": {"type": "array"}
+  },
+  "$defs": {
+    "point": {
+      "type": "array",
+      "items": {"type": "number"},
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+  "additionalProperties": false
+}

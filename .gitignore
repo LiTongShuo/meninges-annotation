@@ -1,0 +1,49 @@
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Portable third-party tools are configured but not versioned.
+.tools/
+
+# Source images and generated scientific data stay local.
+raw/*
+!raw/.gitkeep
+annotations/*
+!annotations/.gitkeep
+config/project.json
+metadata/image_manifest.csv
+metadata/calibration.csv
+fiji/exports/*
+fiji/rois/*
+fiji/measurements/*
+fiji/recovery/*
+
+# Generated deliverables can be recreated from JSON + SVG.
+exports/png/*
+exports/pdf/*
+exports/demo/*
+exports/legacy_combined/*
+exports/vector/wps/*
+tests/artifacts/*
+
+# Build workspaces and generated reports stay local.
+build/
+output/
+tmp/
+
+# Finished slide decks are generated artifacts.
+/*.pptx
+
+# Accidental Windows placeholder file.
+/scripts/新建 文本文档.txt
+
+# Generated PDFs that get copied next to SVG masters.
+/layouts/masters/*.pdf
+
+*.tmp
+*.bak

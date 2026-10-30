@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "project_id": "example-project",
+  "display_name": "Example B-scan annotation project",
+  "unit": "µm",
+  "source_images": {
+    "expected_width_px": null,
+    "expected_height_px": null,
+    "format": "PNG",
+    "color_mode": "RGB"
+  },
+  "calibration": {
+    "id": "REPLACE_WITH_APPROVED_CALIBRATION_ID",
+    "scope": "batch",
+    "source_space": {
+      "coordinate_space": "source",
+      "x_um_per_px": null,
+      "y_um_per_px": null
+    },
+    "provided_reference": {
+      "coordinate_space": "display",
+      "scale_factor_from_source": null,
+      "x_um_per_px": null,
+      "y_um_per_px": null
+    }
+  },
+  "measurement": {
+    "definition": "two_point_euclidean_anisotropic",
+    "formula": "sqrt((dx_px*x_um_per_px)^2 + (dy_px*y_um_per_px)^2)",
+    "display_decimals": 2,
+    "shared_foot_max_snap_px": 3,
+    "refractive_index_formula": "1 + smaller_distance_um / larger_distance_um",
+    "refractive_index_display_decimals": 3
+  },
+  "layout": {
+    "main_display_scale": 1,
+    "inset_count": 1,
+    "inset_aspect_ratio": 1.0,
+    "inset_placement": "right",
+    "gap_px": 0,
+    "main_scale_bar": {"x_um": null, "y_um": null},
+    "inset_scale_bar": {"mode": "fixed", "x_um": null, "y_um": null},
+    "style": {
+      "font_family": "sans-serif",
+      "font_size_px": 12,
+      "global_measurement_font_size_px": 12,
+      "stroke_width_px": 1,
+      "arrow_head_px": 4,
+      "stroke_scaling": "with_geometry",
+      "label_placement": "auto_avoid",
+      "measurement_color": "#00ffff",
+      "measurement_label_color": "#ffff00",
+      "measurement_outline_color": "#000000",
+      "measurement_outline_width_px": 1,
+      "arrow_direction": "outward",
+      "reference_line_color": "#00ff00",
+      "reference_line_outline_color": "#000000",
+      "reference_line_dash_px": 4,
+      "roi_color": "#ffffff",
+      "scale_bar_color": "#ffffff",
+      "panel_border_color": "#808080"
+    }
+  },
+  "tools": {
+    "fiji_archive": "<set-local-Fiji-archive-path>",
+    "fiji_executable": ".tools\\Fiji.app\\fiji-windows-x64.exe",
+    "inkscape_executable": "<set-local-Inkscape-path>"
+  }
+}
